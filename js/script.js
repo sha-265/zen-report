@@ -305,7 +305,10 @@
     }
     function resetAll() {
         $('period').value = '12'; $('outHours').value = '10'; $('cashback').value = '0'; $('notes').value = ''; $('rzSpend').value = '0'; $('rzValue').value = '4.5'; $('rzBoost').checked = false;
-        ['manualFX', 'cardFX', 'atmMonthly', 'closedBalance', 'closedMonths'].forEach(id => $(id).value = '0');
+        ['manualFX', 'cardFX', 'atmMonthly', 'closedBalance', 'closedMonths'].forEach(id => {
+            const field = $(id);
+            if (field) field.value = '0';
+        });
         Object.keys(annualState).forEach(id => annualState[id] = { amount: 0, count: 0 });
         document.querySelectorAll('[data-service-id]').forEach(el => el.value = '0');
         svc.filter(s => s.rateEditable).forEach(s => varRates[s.id] = [...s.rateDefaults]);
