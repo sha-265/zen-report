@@ -155,7 +155,7 @@
    ${fieldHTML('cardFX', 'Annual card purchases requiring FX (€)', 0, 'Card purchases made in a currency different from your account currency.', 'number', '10')}
    </div><div class="notice">Customer-ordered exchange: Good gets 0% up to €1,000/month then 0.50%; Better gets 0% up to €3,000/month then 0.25%; Best and Zen are 0%. Card spending is calculated separately using the markup over the Mastercard rate (0.50%, 0.25%, 0.10%, 0%) plus the selected out-of-market-hours share.</div>`);
             } else if (cat === 'Cash withdrawal allowance') {
-                content.insertAdjacentHTML('beforeend', `<div class="grid">${fieldHTML('atmMonthly', 'Typical cash withdrawals per month (€)', 0, 'This monthly amount is repeated for the selected calculation period. External ATM surcharges are excluded.', 'number', '10')}</div><div class="notice">Good: 1.75% of all withdrawals. Better: free up to €200/month, then 1.75%. Best/Zen: free up to €800/month, then 1.75%.</div>`);
+                content.insertAdjacentHTML('beforeend', `<div class="grid">${fieldHTML('atmMonthly', 'Typical cash withdrawals per month (€)', 0, 'This monthly amount is repeated for the selected calculation period. External ATM surcharges are excluded.', 'number', '10')}</div><div class="notice">Good: 1.75% of all withdrawals. Better: free up to €200/month, then 1.75%. Best: free up to €800/month, then 1.75%. Zen: free up to €1,600/month, then 1.75%.</div>`);
             } else if (cat === 'Account maintenance') {
                 content.insertAdjacentHTML('beforeend', `<div class="grid">${fieldHTML('closedBalance', 'Unclaimed balance in closed account (€)', 0, 'Leave zero unless this case applies. Fee is 1% of the balance, minimum €10 per month.', 'number', '10')}${fieldHTML('closedMonths', 'Months subject to closed-account maintenance', 0, 'Use 0-12 for a 12-month calculation.', 'number', '1', '0')}</div>`);
             }
@@ -220,7 +220,7 @@
         // Average monthly cash withdrawals; free allowances restart each month.
         const atm = val('atmMonthly');
         costs.forEach((c, i) => {
-            const allowance = [0, 200, 800, 800][i];
+            const allowance = [0, 200, 800, 1600][i];
             const rate = .0175;
             const base = i === 0 ? atm : Math.max(0, atm - allowance);
             c.cash += base * rate * months;
@@ -272,7 +272,7 @@
         ['Premium Support', 'Unavailable', 'Unavailable', 'Unavailable', 'Available'],
         ['Physical card order', '€9.99', 'First free; next €9.99', 'First free; next €9.99', 'First free; next €9.99'],
         ['Virtual cards free limit', 'First free', 'Up to 3 free', 'Up to 6 free', 'Up to 9 free'],
-        ['ATM withdrawal free limit', 'None', '€200/month', '€800/month', '€800/month'],
+        ['ATM withdrawal free limit', 'None', '€200/month', '€800/month', '€1,600/month'],
         ['Manual FX no-markup threshold', '€1,000/month', '€3,000/month', 'Unlimited', 'Unlimited'],
         ['Account commitment', 'No commitment', 'Cancel anytime, monthly billing', '3-month minimum, then monthly', '3-month minimum, then monthly'],
         ['Account opening', 'Free', 'Free', 'Free', 'Free'],
