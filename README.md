@@ -30,15 +30,6 @@ This project contains a single-page HTML tool that helps compare annual costs ac
 3. Adjust assumptions such as FX market-hour usage or Reward Zone redemption value.
 4. Review the plan comparison and detailed cost breakdown.
 
-## 📁 Project structure
-
-```text
-zen-report/
-├── LICENSE
-├── README.md
-└── zen_pricing_calculator.html
-```
-
 ## 📝 Notes
 
 - The calculator is designed around the published ZEN Individual pricing PDF.
