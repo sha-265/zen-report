@@ -39,10 +39,10 @@
 
     // Transfers (PDF pages 8-10)
     add('Transfers', 'incomingSEPA', 'Incoming SEPA (standard / instant)', 'Free on all plans.', Z);
-    add('Transfers', 'outgoingSEPA', 'Outgoing SEPA (standard / instant)', 'Better: first 5 transfers free, then €0.25 each. Good €0.25 each; Best/Zen free.', F([0, 0, 0, 0], [.25, .25, 0, 0]), { kind: 'sepaOut', freeCounts: [0, 5, 0, 0] });
+    add('Transfers', 'outgoingSEPA', 'Outgoing SEPA (standard / instant)', 'Good €0.25 per transfer; Better/Best/Zen free.', F([0, 0, 0, 0], [.25, 0, 0, 0]));
     add('Transfers', 'incomingLocal', 'Incoming local transfer', 'Free on all plans.', Z);
-    add('Transfers', 'localPLN', 'Outgoing local PLN (standard / Elixir)', 'Good €0.50; Better €0.25; Best/Zen free per transfer.', F([0, 0, 0, 0], [.50, .25, 0, 0]));
-    add('Transfers', 'localPLNInstant', 'Outgoing local PLN (instant / Express Elixir)', 'Good €1.00; Better €0.50; Best/Zen free per transfer.', F([0, 0, 0, 0], [1, .5, 0, 0]));
+    add('Transfers', 'localPLN', 'Outgoing local PLN (standard / Elixir)', 'Good €0.50 per transfer; Better/Best/Zen free.', F([0, 0, 0, 0], [.50, 0, 0, 0]));
+    add('Transfers', 'localPLNInstant', 'Outgoing local PLN (instant / Express Elixir)', 'Good €1.00 per transfer; Better/Best/Zen free.', F([0, 0, 0, 0], [1, 0, 0, 0]));
     add('Transfers', 'localGBP', 'Outgoing local GBP', 'Good 0.10% + €1; Better 0.05% + €0.75; Best/Zen free.', F([.001, .0005, 0, 0], [1, .75, 0, 0]));
     add('Transfers', 'localRON', 'Outgoing local RON', 'Good €1.49; Better €0.99; Best €0.75; Zen free per transfer.', F([0, 0, 0, 0], [1.49, .99, .75, 0]));
     add('Transfers', 'localOther', 'Outgoing local transfer in other currencies', 'Good 0.10% + €1.99; Better 0.10% + €1.49; Best 0.10% + €1; Zen free.', F([.001, .001, .001, 0], [1.99, 1.49, 1, 0]));
@@ -153,7 +153,7 @@
                 content.insertAdjacentHTML('beforeend', `<div class="grid">
    ${fieldHTML('manualFX', 'Annual customer-ordered currency exchange (€)', 0, 'Exchange volume ordered directly by you, not foreign-currency card purchases.', 'number', '10')}
    ${fieldHTML('cardFX', 'Annual card purchases requiring FX (€)', 0, 'Card purchases made in a currency different from your account currency.', 'number', '10')}
-   </div><div class="notice">Customer-ordered exchange: Good gets 0% up to €1,000/month then 0.50%; Better gets 0% up to €3,000/month then 0.25%; Best and Zen are 0%. Card spending is calculated separately using the markup over the Mastercard rate (0.50%, 0.25%, 0.10%, 0%) plus the selected out-of-market-hours share.</div>`);
+    </div><div class="notice">Customer-ordered exchange: Good gets 0% up to €1,000/month then 0.50%; Better gets 0% up to €3,000/month then 0.25%; Best and Zen are 0%. Card spending uses the Mastercard markup (0.50%, 0.25%, 0.10%, 0%); the 0.40% out-of-market-hours surcharge applies to Good and Better only.</div>`);
             } else if (cat === 'Cash withdrawal allowance') {
                 content.insertAdjacentHTML('beforeend', `<div class="grid">${fieldHTML('atmMonthly', 'Typical cash withdrawals per month (€)', 0, 'This monthly amount is repeated for the selected calculation period. External ATM surcharges are excluded.', 'number', '10')}</div><div class="notice">Good: 1.75% of all withdrawals. Better: free up to €200/month, then 1.75%. Best: free up to €800/month, then 1.75%. Zen: free up to €1,600/month, then 1.75%.</div>`);
             } else if (cat === 'Account maintenance') {
@@ -216,7 +216,8 @@
         const cardSpend = amountScaled('cardFX');
         const outShare = Math.min(100, val('outHours')) / 100;
         const cardRates = [.005, .0025, .001, 0];
-        costs.forEach((c, i) => c.fx += cardSpend * (cardRates[i] + (i === 3 ? 0 : .004 * outShare)));
+        const outOfHoursRates = [.004, .004, 0, 0];
+        costs.forEach((c, i) => c.fx += cardSpend * (cardRates[i] + outOfHoursRates[i] * outShare));
         // Average monthly cash withdrawals; free allowances restart each month.
         const atm = val('atmMonthly');
         costs.forEach((c, i) => {
