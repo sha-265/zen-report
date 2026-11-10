@@ -9,61 +9,41 @@
 <body>
 <main>
   <h1>ZEN Individual Pricing Calculator</h1>
-  <p class="lede">Estimate a year's fees under Good, Better, Best and Zen using the complete priced-service table in ZEN's Individual Customer pricing document. Add the transaction volumes and counts you expect; unused services stay at zero.</p>
-  <div class="source">Pricing source: <a href="https://www.zen.com/files/pricing/new_individual_pricing.pdf" target="_blank" rel="noopener">ZEN Individual Customer pricing PDF</a> · effective 4 November 2026 · EUR figures used for comparison.</div>
+  <p class="lede">Compare the listed fees across Good, Better, Best and Zen using your estimated usage and the priced-service table in ZEN's Individual Customer pricing document.</p>
+  <div class="notice" role="note"><strong>Important:</strong> This is a plan comparison, not a calculation of the total fees you will pay. It estimates only the services and usage you enter below. The displayed amounts are useful for comparing the differences between plans; they are not a complete bill or a guarantee of your actual costs. Your actual fees may include items not modeled here or depend on your country, provider and in-app rates.</div>
+  <div class="source">Pricing source: <a href="https://www.zen.com/files/pricing/new_individual_pricing.pdf" target="_blank" rel="noopener">ZEN Individual Customer pricing PDF</a> · effective 4 November 2025.</div>
 
   <section class="panel">
-    <div class="section-head"><div><h2>General assumptions</h2><div class="subtext">These settings apply to annual totals and the relevant country-specific fees.</div></div></div>
+    <div class="section-head"><div><h2>General assumptions</h2><div class="subtext">These settings apply to the comparison period and relevant country-specific fees.</div></div></div>
     <div class="grid">
-      <div class="field"><label for="period">Calculation period</label><select id="period"><option value="12" selected>12 months</option><option value="6">6 months</option><option value="3">3 months</option></select><small>Annual usage inputs are scaled to the selected period; Good is commitment-free, Better billed monthly, Best and Zen require a 3-month minimum.</small></div>
-      <div class="field"><label for="outHours">Card spending outside FX market hours (%)</label><input id="outHours" type="number" min="0" max="100" step="1" value="10"><small>Enter the share of foreign-currency card spending outside market hours. Surcharge is 0.40% on Good/Better/Best and 0% on Zen.</small></div>
-      <div class="field"><label for="cashback">Estimated eligible annual cashback before plan multiplier (€)</label><input id="cashback" type="number" min="0" step="10" value="0"><small>Optional benefit estimate. Good gives 50%; Better/Best/Zen give 100% of the cashback you normally receive. It is subtracted from net cost.</small></div>
+      <div class="field"><label for="period">Calculation period</label><select id="period"><option value="12" selected>12 months</option><option value="6">6 months</option><option value="3">3 months</option></select></div>
+      <div class="field"><label for="outHours">Card spending outside FX market hours (%)</label><input id="outHours" type="number" min="0" max="100" step="1" value="10"><small>Enter the share of foreign-currency card spending made outside market hours.</small></div>
+      <div class="field"><label for="cashback">Estimated eligible annual cashback before plan multiplier (€)</label><input id="cashback" type="number" min="0" step="10" value="0"><small>Optional benefit estimate; this is not a fee.</small></div>
       <div class="field"><label for="notes">Personal notes (not included in calculation)</label><input id="notes" type="text" placeholder="Optional"><small>Stays in this browser tab only; nothing is uploaded.</small></div>
     </div>
-    <div class="notice">Variable card top-up fees and some provider/country-specific prices are not a single fixed rate in the PDF. For Visa/Mastercard and Apple/Google Pay, use the rate shown in the ZEN app and enter it under “Adjust rate assumptions” on the relevant card.</div>
+    <div class="notice">Variable card top-up fees and some provider/country-specific prices are not a single fixed rate in the PDF. For Visa/Mastercard and Apple/Google Pay, use the rate shown in the app.</div>
   </section>
-
 
   <section class="panel" id="reward-zone">
     <h2>Optional Reward Zone estimate</h2>
-    <p class="subtext">Reward Zone is available on Better, Best and Zen, but not Good. This estimate is deducted from the net cost for eligible plans.</p>
+    <p class="subtext">Reward Zone is available on Better, Best and Zen, but not Good. This estimate is deducted from the modeled plan comparison for eligible plans; it is not guaranteed cash savings.</p>
     <div class="grid">
-      <div class="field">
-        <label for="rzSpend">Annual eligible card spending (€)</label>
-        <input id="rzSpend" type="number" min="0" step="10" value="0">
-        <small>Enter only eligible card purchases. The amount is prorated when you select a calculation period shorter than 12 months.</small>
-      </div>
-      <div class="field">
-        <label for="rzValue">Estimated value per 70-Shard redemption</label>
-        <select id="rzValue">
-          <option value="2">€2.00 — worst case</option>
-          <option value="4.5" selected>€4.50 — midpoint estimate</option>
-          <option value="7">€7.00 — best case</option>
-        </select>
-        <small>Choose the value to model for each complete 70-Shard redemption.</small>
-      </div>
-      <div class="field">
-        <label>Shard boost</label>
-        <div class="check-row">
-          <input id="rzBoost" type="checkbox">
-          <label for="rzBoost">Apply the optional 30% boost</label>
-        </div>
-        <small>The boost increases Shard accrual by 30%; the result is rounded down to whole Shards.</small>
-      </div>
+      <div class="field"><label for="rzSpend">Annual eligible card spending (€)</label><input id="rzSpend" type="number" min="0" step="10" value="0"><small>Enter only eligible card purchases. The amount is prorated for periods shorter than 12 months.</small></div>
+      <div class="field"><label for="rzValue">Estimated value per 70-Shard redemption</label><select id="rzValue"><option value="2">€2.00 — worst case</option><option value="4.5" selected>€4.50 — midpoint estimate</option><option value="7">€7.00 — best case</option></select><small>Choose the value to model for each complete 70-Shard redemption.</small></div>
+      <div class="field"><label>Shard boost</label><div class="check-row"><input id="rzBoost" type="checkbox"><label for="rzBoost">Apply the optional 30% boost</label></div><small>The boost increases Shard accrual by 30%; the result is rounded down to whole Shards.</small></div>
     </div>
-    <div id="reward-summary" class="amount-summary" aria-live="polite">
-      <p>0 whole Shards · 0 complete 70-Shard redemptions.</p>
-    </div>
+    <div id="reward-summary" class="amount-summary" aria-live="polite"><p>0 whole Shards · 0 complete 70-Shard redemptions.</p></div>
     <div class="notice">Estimate method: 1 Shard per €3.30 of eligible card spending; only complete groups of 70 Shards are redeemed. Good receives no Reward Zone credit.</div>
   </section>
 
   <div id="categories"></div>
 
   <section class="panel" id="results-panel">
-    <div class="section-head"><div><h2>Estimated cost by plan</h2><p class="subtext">Totals include the subscription, entered services, and optional estimated cashback credit. Coverage/insurance benefits without a published monetary price are compared separately below.</p></div><button id="reset" class="btn" type="button">Reset inputs</button></div>
+    <div class="section-head"><div><h2>Plan-to-plan fee comparison</h2><p class="subtext">These are modeled costs for the listed items and assumptions you entered—not your total fees or final bill. Compare the difference between plans; shared fees and unmodeled charges may make your actual total different.</p></div></div>
     <div id="results" class="results" aria-live="polite"></div>
     <div class="table-wrap"><table class="breakdown" id="breakdown"></table></div>
     <div id="totals-note" class="footnote"></div>
+    <button id="reset" type="button">Reset all inputs</button>
   </section>
 
   <section class="panel">
@@ -80,7 +60,8 @@
       <li>Customer-ordered FX assumes exchange volume is spread evenly over the selected months, and applies the monthly free tier to that volume.</li>
       <li>Card top-up rates can vary by card type, card-issuing country and top-up currency. The PDF says the actual rate is shown in-app; adjust those fields to match your quote.</li>
       <li>Third-party ATM surcharges, sender/recipient bank fees outside ZEN's stated fee, exchange-rate movement, taxes and unlisted provider charges are not included.</li>
-      <li>Some listed “incidental costs” apply only to exceptional cases (for example, manual processing of funds after account closure or payments of blocked funds). They are opt-in inputs and default to zero.</li>
+      <li>Some listed incidental costs apply only to exceptional cases. They are opt-in inputs and do not represent typical fees.</li>
+      <li>This comparison is not a complete statement of all fees you may pay. Check the current pricing document and the rates shown in the ZEN app for your account.</li>
     </ul>
     <p class="source">Source: <a href="https://www.zen.com/files/pricing/new_individual_pricing.pdf" target="_blank" rel="noopener">Official ZEN pricing PDF (15 pages)</a>.</p>
   </section>
