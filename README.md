@@ -27,7 +27,7 @@ This single-page tool compares annual costs across ZEN's Good, Better, Best, and
 
 1. [Download the source ZIP](https://github.com/sha-265/zen-report/archive/refs/heads/main.zip).
 2. Extract the ZIP file, keeping the project folders together so the `css/` and `js/` files remain alongside `zen_pricing_calculator.html`.
-3. Open `zen_pricing_calculator.html` in a modern web browser to run the refactored calculator. No build step or dependencies are required.
+3. Open `zen_pricing_calculator.html` in a modern web browser to run the calculator. No build step or dependencies are required.
 4. Enter your expected values and transaction counts, adjust any assumptions, and review the plan comparison and cost breakdown.
 
 ## 📝 Notes
