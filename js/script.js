@@ -51,9 +51,7 @@
     add('Transfers', 'cardSendNonEEA', 'Card transfer (sending) - non-EEA', '2.00% on all plans.', F([.02, .02, .02, .02]));
     add('Transfers', 'swiftSHAOut', 'Outgoing SWIFT - SHA', '0.10% + Good €5; Better/Best/Zen €3 per transfer.', F([.001, .001, .001, .001], [5, 3, 3, 3]));
     add('Transfers', 'swiftSHAIn', 'Incoming SWIFT', '0.10% + Good €5; Better/Best/Zen €3 per transfer.', F([.001, .001, .001, .001], [5, 3, 3, 3]));
-    add('Transfers', 'swiftOUR1', 'Outgoing SWIFT - OUR (category 1)', '0.10% + Good €25; Better/Best/Zen €15 per transfer.', F([.001, .001, .001, .001], [25, 15, 15, 15]), { kind: 'category', catKey: 'ourCategory', catValue: '1' });
-    add('Transfers', 'swiftOUR2', 'Outgoing SWIFT - OUR (category 2)', '0.10% + Good €35; Better/Best/Zen €25 per transfer.', F([.001, .001, .001, .001], [35, 25, 25, 25]), { kind: 'category', catKey: 'ourCategory', catValue: '2' });
-    add('Transfers', 'swiftOUR3', 'Outgoing SWIFT - OUR (category 3)', '0.10% + Good €50; Better €40; Best/Zen €40 per transfer.', F([.001, .001, .001, .001], [50, 40, 40, 40]), { kind: 'category', catKey: 'ourCategory', catValue: '3' });
+    add('Transfers', 'swiftOUR1', 'Outgoing SWIFT - OUR (all categories)', 'Good have an extra €10 fee per transaction.', F([.001, .001, .001, .001], [10, 0, 0, 0]), { kind: 'category', catKey: 'ourCategory', catValue: '1' });
     add('Transfers', 'xbs1', 'Mastercard XBS (category 1)', 'Good €5; Better €4; Best/Zen €3 per transfer.', F([0, 0, 0, 0], [5, 4, 3, 3]), { kind: 'category', catKey: 'xbsCategory', catValue: '1' });
     add('Transfers', 'xbs2', 'Mastercard XBS (category 2)', 'Good/Better/Best: 0.50% + €5/€4/€3; Zen 0.40% + €3.', F([.005, .005, .005, .004], [5, 4, 3, 3]), { kind: 'category', catKey: 'xbsCategory', catValue: '2' });
     add('Transfers', 'xbs3', 'Mastercard XBS (category 3)', 'Good 2.00% + €5; Better 1.75% + €4; Best 1.75% + €3; Zen 1.50% + €3.', F([.02, .0175, .0175, .015], [5, 4, 3, 3]), { kind: 'category', catKey: 'xbsCategory', catValue: '3' });
@@ -120,9 +118,8 @@
         let countLabel = 'Transactions/year';
         if (s.kind === 'cards' || s.kind === 'beLocal') countLabel = 'Issued cards not expired';
         if (s.id === 'betterTrialDelivery') countLabel = 'Deliveries during trial';
-        // Show only inputs that affect the fee: percentage charges need an amount;
-        // fixed per-operation charges and allowances need a count.
-        const amountRelevant = s.fees.some(f => f.p !== 0) || s.rateEditable;
+        // Show amounts only when the percentage rate differs by plan.
+        const amountRelevant = s.fees.some((fee, i) => i > 0 && fee.p !== s.fees[0].p) || s.rateEditable;
         const countRelevant = s.fees.some(f => f.f !== 0) || ['sepaOut', 'cards', 'beLocal'].includes(s.kind) || s.id === 'betterTrialDelivery';
         let rateBlock = '';
         if (s.rateEditable) {
