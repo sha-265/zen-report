@@ -94,7 +94,7 @@
     const categoryDescriptions = {
         'Funding and top-ups': 'Every listed method under “Adding money” plus the separate digital-currency top-up fee. Amounts are annual totals; count is annual transaction count.',
         'Transfers': 'Inbound and outbound SEPA, local, card, SWIFT, Mastercard XBS, CASP-related and PrivatMoney transfer fees. Enter amounts separately for each SWIFT OUR and Mastercard XBS country category you use.',
-        'Currency exchange': 'Two distinct FX paths: manual/customer-ordered exchanges have monthly free tiers; card purchases in a non-account currency use the Mastercard markup and possible out-of-hours fee.',
+        'Currency exchange': 'Customer-ordered exchanges and ZEN-supported card purchases use the same monthly ZEN-rate tiers. Unsupported card currencies use Mastercard conversion.',
         'Cash and ATM': 'Cash deposits, free store/POS options, PIN changes and balance inquiries. Cash withdrawal allowance has its own monthly calculator below.',
         'Cards': 'One-off issuance and delivery costs; card count should reflect the PDF note that limits include cards issued and not expired.',
         'Account maintenance': 'Only relevant to closed accounts with unclaimed remaining funds.',
@@ -151,9 +151,9 @@
             if (categoryDescriptions[cat]) { const p = document.createElement('p'); p.className = 'subtext'; p.textContent = categoryDescriptions[cat]; content.append(p) }
             if (cat === 'Currency exchange') {
                 content.insertAdjacentHTML('beforeend', `<div class="grid">
-   ${fieldHTML('manualFX', 'Annual customer-ordered currency exchange (€)', 0, 'Exchange volume ordered directly by you, not foreign-currency card purchases.', 'number', '10')}
-   ${fieldHTML('cardFX', 'Annual card purchases requiring FX (€)', 0, 'Card purchases made in a currency different from your account currency.', 'number', '10')}
-    </div><div class="notice">Customer-ordered exchange: Good gets 0% up to €1,000/month then 0.50%; Better gets 0% up to €3,000/month then 0.25%; Best and Zen are 0%. Card spending uses the Mastercard markup (0.50%, 0.25%, 0.10%, 0%); the 0.40% out-of-market-hours surcharge applies to Good and Better only.</div>`);
+    ${fieldHTML('zenRateFX', 'Annual ZEN-rate currency conversions (€)', 0, 'Combine exchanges ordered directly in ZEN and card purchases in ZEN-supported currencies.', 'number', '10')}
+    ${fieldHTML('unsupportedCardFX', 'Annual card purchases in currencies unsupported by ZEN (€)', 0, 'These purchases use Mastercard conversion and the plan-specific Mastercard markup.', 'number', '10')}
+    </div><div class="notice">ZEN-rate conversions (customer-ordered plus ZEN-supported card purchases) share these monthly tiers: Good has €1,000 free, then 0.50%; Better has €3,000 free, then 0.25%; Best and Zen are 0%. The 0.40% out-of-market-hours surcharge applies to this combined volume on Good and Better. Unsupported card currencies use Mastercard conversion with plan markups of 0.50%, 0.25%, 0.10%, and 0%.</div>`);
             } else if (cat === 'Cash withdrawal allowance') {
                 content.insertAdjacentHTML('beforeend', `<div class="grid">${fieldHTML('atmMonthly', 'Typical cash withdrawals per month (€)', 0, 'This monthly amount is repeated for the selected calculation period. External ATM surcharges are excluded.', 'number', '10')}</div><div class="notice">Good: 1.75% of all withdrawals. Better: free up to €200/month, then 1.75%. Best: free up to €800/month, then 1.75%. Zen: free up to €1,600/month, then 1.75%.</div>`);
             } else if (cat === 'Account maintenance') {
@@ -205,19 +205,18 @@
             if (!group) return;
             costs.forEach((c, i) => c[group] += feeFor(s, i));
         });
-        // Manual direct FX volume, with monthly no-markup threshold. Volume assumed even across chosen months.
-        const manual = amountScaled('manualFX');
+        const zenRateVolume = amountScaled('zenRateFX');
         costs.forEach((c, i) => {
             let thresh = [1000, 3000, Infinity, Infinity][i];
             let rate = [.005, .0025, 0, 0][i];
-            c.fx += Math.max(0, manual / months - thresh) * rate * months;
+            c.fx += Math.max(0, zenRateVolume / months - thresh) * rate * months;
         });
-        // Card purchase FX markup plus out-of-market-hours rate.
-        const cardSpend = amountScaled('cardFX');
+        // Unsupported currencies use Mastercard; ZEN-rate volume includes direct and card conversions.
+        const unsupportedCardSpend = amountScaled('unsupportedCardFX');
         const outShare = Math.min(100, val('outHours')) / 100;
-        const cardRates = [.005, .0025, .001, 0];
         const outOfHoursRates = [.004, .004, 0, 0];
-        costs.forEach((c, i) => c.fx += cardSpend * (cardRates[i] + outOfHoursRates[i] * outShare));
+        const mastercardRates = [.005, .0025, .001, 0];
+        costs.forEach((c, i) => c.fx += zenRateVolume * outOfHoursRates[i] * outShare + unsupportedCardSpend * mastercardRates[i]);
         // Average monthly cash withdrawals; free allowances restart each month.
         const atm = val('atmMonthly');
         costs.forEach((c, i) => {
@@ -306,7 +305,7 @@
     }
     function resetAll() {
         $('period').value = '12'; $('outHours').value = '10'; $('cashback').value = '0'; $('notes').value = ''; $('rzSpend').value = '0'; $('rzValue').value = '4.5'; $('rzBoost').checked = false;
-        ['manualFX', 'cardFX', 'atmMonthly', 'closedBalance', 'closedMonths'].forEach(id => {
+        ['zenRateFX', 'unsupportedCardFX', 'atmMonthly', 'closedBalance', 'closedMonths'].forEach(id => {
             const field = $(id);
             if (field) field.value = '0';
         });
