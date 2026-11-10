@@ -36,6 +36,10 @@ This project contains a single-page HTML tool that helps compare annual costs ac
 - Some values are estimates and should be verified against the current official pricing document.
 - The app runs entirely client-side in the browser with no build step required.
 
+## ✅ TODO
+
+- [ ] Add an option to upload a ZEN account statement and automatically calculate fees for all plans. This option is not currently available because ZEN statements do not include transaction types, which are needed to determine the applicable fees.
+
 ## 📌 Source and licensing
 
 - Official ZEN pricing source: https://www.zen.com/files/pricing/new_individual_pricing.pdf
