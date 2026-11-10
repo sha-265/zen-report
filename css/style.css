@@ -1,0 +1,514 @@
+:root {
+    color-scheme: light dark;
+    --bg: #f3f6f8;
+    --panel: #fff;
+    --text: #17212b;
+    --muted: #5d6876;
+    --line: #d9e0e7;
+    --accent: #176b52;
+    --soft: #e8f3ed;
+    --field: #fff;
+    --shadow: 0 5px 24px #1020300b
+}
+
+@media(prefers-color-scheme:dark) {
+    :root {
+        --bg: #10151a;
+        --panel: #1a222b;
+        --text: #edf3f7;
+        --muted: #aab5c1;
+        --line: #34404c;
+        --accent: #79d4ad;
+        --soft: #20392f;
+        --field: #141b22;
+        --shadow: none
+    }
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.48 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+}
+
+main {
+    max-width: 1180px;
+    margin: auto;
+    padding: 26px 16px 50px
+}
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 2.45rem);
+    line-height: 1.1;
+    letter-spacing: -.04em;
+    margin: 0 0 8px
+}
+
+h2 {
+    font-size: 1.18rem;
+    margin: 0 0 14px
+}
+
+h3 {
+    font-size: 1rem;
+    margin: 0 0 8px
+}
+
+.lede {
+    color: var(--muted);
+    max-width: 880px;
+    margin: 0 0 18px
+}
+
+.source {
+    color: var(--muted);
+    font-size: .85rem;
+    margin: 10px 0 24px
+}
+
+.source a {
+    color: inherit
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: var(--shadow)
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px
+}
+
+.field {
+    min-width: 0;
+    margin: 9px 0
+}
+
+.field label,
+.label {
+    display: block;
+    font-weight: 650;
+    margin-bottom: 5px
+}
+
+.field small,
+.help {
+    display: block;
+    color: var(--muted);
+    font-size: .81rem;
+    margin-top: 4px
+}
+
+.field input,
+.field select,
+.field textarea,
+select,
+input[type=number] {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--field);
+    color: var(--text);
+    font: inherit;
+    padding: 8px 10px
+}
+
+.unit-input {
+    position: relative
+}
+
+.unit-input span {
+    position: absolute;
+    left: 11px;
+    top: 9px;
+    color: var(--muted);
+    pointer-events: none
+}
+
+.unit-input input {
+    padding-left: 27px
+}
+
+.subtext {
+    font-size: .85rem;
+    color: var(--muted)
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px
+}
+
+.section-head p {
+    color: var(--muted);
+    font-size: .86rem;
+    margin: 4px 0 12px
+}
+
+.category {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    margin: 13px 0;
+    overflow: hidden
+}
+
+.category>summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 18px;
+    font-weight: 750
+}
+
+.category>summary::-webkit-details-marker {
+    display: none
+}
+
+.category>summary:after {
+    content: '+';
+    font-size: 1.25rem;
+    color: var(--muted)
+}
+
+.category[open]>summary:after {
+    content: '−'
+}
+
+.category-content {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--line)
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px
+}
+
+.service {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    min-width: 0
+}
+
+.service-title {
+    font-weight: 700;
+    margin-bottom: 3px
+}
+
+.service-note {
+    font-size: .8rem;
+    color: var(--muted);
+    margin-bottom: 8px
+}
+
+.mini-fields {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 8px
+}
+
+.mini-fields.single-field {
+    grid-template-columns: minmax(0, 1fr)
+}
+
+.mini-fields .field {
+    margin: 3px 0
+}
+
+.mini-fields label {
+    font-size: .8rem;
+    font-weight: 600
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 9px
+}
+
+.check-row input {
+    width: 18px;
+    min-height: 18px;
+    margin: 0
+}
+
+.check-row label {
+    margin: 0
+}
+
+.rate-details {
+    margin-top: 8px
+}
+
+.rate-details summary {
+    font-size: .82rem;
+    color: var(--muted);
+    cursor: pointer
+}
+
+.rate-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 8px
+}
+
+.rate-grid label {
+    font-size: .78rem;
+    color: var(--muted)
+}
+
+.rate-grid input {
+    min-height: 35px;
+    font-size: .85rem
+}
+
+.badge {
+    display: inline-block;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font-size: .73rem;
+    padding: 3px 8px;
+    font-weight: 750
+}
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px
+}
+
+.plan {
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 13px;
+    min-width: 0
+}
+
+.plan.winner {
+    border: 2px solid var(--accent);
+    background: var(--soft);
+    padding: 12px
+}
+
+.plan-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px
+}
+
+.plan-name {
+    font-weight: 800
+}
+
+.total {
+    font-size: 1.3rem;
+    font-weight: 850;
+    letter-spacing: -.03em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums
+}
+
+.plan .detail {
+    font-size: .79rem;
+    color: var(--muted);
+    margin: 9px 0;
+    line-height: 1.55
+}
+
+.bar {
+    height: 5px;
+    border-radius: 9px;
+    background: var(--line);
+    overflow: hidden
+}
+
+.bar span {
+    display: block;
+    height: 100%;
+    background: #8b96a2
+}
+
+.winner .bar span {
+    background: var(--accent)
+}
+
+.breakdown {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+    margin-top: 14px
+}
+
+.breakdown th,
+.breakdown td {
+    border-bottom: 1px solid var(--line);
+    padding: 8px 6px;
+    text-align: right
+}
+
+.breakdown th:first-child,
+.breakdown td:first-child {
+    text-align: left
+}
+
+.breakdown thead th {
+    color: var(--muted);
+    font-weight: 650
+}
+
+.breakdown tfoot td {
+    font-weight: 800
+}
+
+.amount-summary {
+    margin-top: 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px
+}
+
+.amount-summary p {
+    margin: 3px 0
+}
+
+.btnrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px
+}
+
+.btn {
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--panel);
+    color: var(--text);
+    padding: 9px 12px;
+    font: inherit;
+    cursor: pointer
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent)
+}
+
+.notice {
+    border-left: 3px solid var(--accent);
+    padding: 10px 12px;
+    background: var(--soft);
+    border-radius: 0 8px 8px 0;
+    font-size: .86rem;
+    margin: 12px 0
+}
+
+.table-wrap {
+    overflow-x: auto
+}
+
+.compare {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: .82rem;
+    min-width: 700px
+}
+
+.compare th,
+.compare td {
+    padding: 8px 9px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top
+}
+
+.compare th {
+    background: var(--bg);
+    font-weight: 750
+}
+
+.compare th:not(:first-child),
+.compare td:not(:first-child) {
+    min-width: 115px
+}
+
+.footnote {
+    color: var(--muted);
+    font-size: .82rem;
+    line-height: 1.5
+}
+
+.error {
+    color: #bd342d;
+    font-size: .85rem
+}
+
+.muted-total {
+    font-size: .8rem;
+    color: var(--muted)
+}
+
+@media(max-width:850px) {
+    .results {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+}
+
+@media(max-width:620px) {
+    main {
+        padding: 18px 10px 35px
+    }
+
+    .panel {
+        padding: 14px
+    }
+
+    .grid,
+    .services {
+        grid-template-columns: 1fr
+    }
+
+    .results {
+        grid-template-columns: 1fr
+    }
+
+    .plan {
+        padding: 12px
+    }
+
+    .mini-fields {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .total {
+        font-size: 1.23rem
+    }
+
+    .category>summary {
+        padding: 14px
+    }
+}
