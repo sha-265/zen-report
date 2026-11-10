@@ -1,6 +1,6 @@
 # ZEN Report 📊
 
-A lightweight, browser-based pricing calculator for estimating the cost of ZEN Individual plans based on the published pricing document.
+A lightweight, browser-based pricing calculator for estimating the cost of ZEN.com Individual plans based on the published pricing document.
 
 This single-page tool compares annual costs across ZEN's Good, Better, Best, and Zen plans using your expected transaction volumes, service usage, and pricing assumptions.
 
