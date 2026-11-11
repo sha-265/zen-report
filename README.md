@@ -45,10 +45,6 @@ This single-page tool compares annual costs across ZEN's Good, Better, Best, and
 - Official ZEN pricing source: [ZEN Individual Customer pricing PDF](https://www.zen.com/files/pricing/new_individual_pricing.pdf)
 - Project license: GNU General Public License v3.0
 
-## 🛡️ License
-
-This project is licensed under the GNU GPL v3.0. See the [LICENSE](LICENSE) file for details.
-
 ## 💡 Use case
 
 Estimate potential costs for ZEN Individual plans before choosing a subscription or compare plans based on your expected usage.
